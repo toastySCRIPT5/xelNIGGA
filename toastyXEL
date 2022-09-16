@@ -1,0 +1,144 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/slf0Dev/Ocerium_Project/main/Library.lua"))()
+
+Window = Library.Main("Xel V1","LeftAlt")
+
+--//tab
+local Tab = Window.NewTab("SILENT")
+
+
+--//section
+local Section = Tab.NewSection("ez silent aims")
+
+
+--// Button
+local Button = Section.NewButton("tp silent aim",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Ryleyxx12/ezsilentaim/main/ez%20silent%20aim",true))();
+    end)
+
+    --// Button
+local Button = Section.NewButton("tp silent aim no circle",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Ryleyxx12/noFOVsilent/main/NoFOVsilent",true))();
+end)
+
+--// Button
+local Button = Section.NewButton("autothrow",function()
+    local Camera = game:GetService("Workspace").CurrentCamera;
+    local Mouse = game:GetService("Players").LocalPlayer:GetMouse();
+    local Players = game:GetService("Players");
+    local Player = Players.LocalPlayer;
+    
+    _G.FOV = 100;
+    
+    FOV_Circle = Drawing.new("Circle");
+    FOV_Circle.Color = Color3.fromHSV(tick() % 5 / 5,1,1);
+    FOV_Circle.Thickness = 1.5;
+    FOV_Circle.NumSides = 9e9;
+    FOV_Circle.Radius = _G.FOV;
+    FOV_Circle.Visible = false;
+    FOV_Circle.Filled = false;
+    
+    game:GetService('RunService').Stepped:connect(function()
+        FOV_Circle.Position = Vector2.new(Mouse.X, Mouse.Y + 37)
+    end)
+    
+    game:GetService("UserInputService").InputBegan:Connect(function(input)
+            
+            task.wait(.35);
+        
+            local function ClosestPlayerToCursor()
+                local Closest = nil;
+                local Distance = 9e9;
+                for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                    if v ~= Player then
+                        if Workspace[v.Name]:FindFirstChild("Humanoid") and Workspace[v.Name].Humanoid.Health ~= 0 then
+                            local Position = Camera:WorldToViewportPoint(Workspace[v.Name].HumanoidRootPart.Position);
+                            local Magnitude = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude;
+                            if Magnitude < Distance and Magnitude < FOV_Circle.Radius then
+                                Closest = workspace[v.Name];
+                                Distance = Magnitude;
+                            end
+                        end
+                    end
+                end
+                return Closest
+            end
+    
+            local ThrowAtTarget = function(args1, args2, args3)
+                return game:GetService("ReplicatedStorage").Remotes.ThrowKnife:FireServer(args1,args2,args3);
+            end
+            
+            ThrowAtTarget(workspace[ClosestPlayerToCursor().Name].Head.Position, 0, CFrame.new());
+            
+    end)
+end)
+
+--//tab
+local Tab = Window.NewTab("ESP")
+
+
+--//section
+local Section = Tab.NewSection("ez esp")
+
+--// Button
+local Button = Section.NewButton("tracers GOATED",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Ryleyxx12/esptracersEZ/main/EzTracers",true))();
+end)
+
+--//tab
+local Tab = Window.NewTab("HITBOXES")
+
+
+--//section
+local Section = Tab.NewSection("ez hitbox")
+
+--// Button
+local Button = Section.NewButton("target hitboxes",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/toastySCRIPT5/hitbox/main/ezhitbox",true))();
+end)
+
+--//tab
+local Tab = Window.NewTab("BLATANT")
+
+
+--//section
+local Section = Tab.NewSection("ez blatant")
+
+--// Button
+local Button = Section.NewButton("fov",function()
+    Workspace.CurrentCamera.FieldOfView = 100
+end)
+
+--// Button
+local Button = Section.NewButton("remove legs",function()
+    game.Players.LocalPlayer.Character['Right Leg']:remove()
+    game.Players.LocalPlayer.Character['Left Leg']:remove()
+end)
+
+--// Button
+local Button = Section.NewButton("remove textures",function()
+    for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
+            v.Material = Enum.Material.SmoothPlastic
+            if v:IsA("Texture") then
+                v:Destroy()
+            end
+        end
+    end
+end)
+
+--//tab
+local Tab = Window.NewTab("CREDITS")
+
+
+--//section
+local Section = Tab.NewSection("ez credits")
+
+--// Button
+local Button = Section.NewButton("FARTLEK",function()
+
+end)
+
+--// Button
+local Button = Section.NewButton("ELMO",function()
+
+end)
